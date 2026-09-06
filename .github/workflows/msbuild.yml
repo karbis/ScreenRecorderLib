@@ -1,6 +1,6 @@
 name: MSBuild
 
-on: [push, pull_request]
+on: [workflow_dispatch]
 
 env:
   SOLUTION_NAME: ScreenRecorderLib
