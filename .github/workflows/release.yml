@@ -2,12 +2,6 @@ name: Release
 
 on:
   workflow_dispatch:
-    inputs:
-      tags:
-        description: 'tag'  
-  push:
-    tags:
-      - "v*"
 
 env:
   SOLUTION_NAME: ScreenRecorderLib
@@ -37,26 +31,3 @@ jobs:
           ${{ env.PROJECT_NAME }}\bin\${{ matrix.platform }}\Release\ScreenRecorderLib.dll
           ${{ env.PROJECT_NAME }}\bin\${{ matrix.platform }}\Release\ScreenRecorderLib.xml
           ${{ env.PROJECT_NAME }}\bin\${{ matrix.platform }}\Release\ScreenRecorderLib.pdb
-        
-  release:
-      name: Upload Release
-      runs-on: ubuntu-latest
-      needs : build
-      steps:
-        - uses: actions/download-artifact@v4
-          with:
-            path: artifacts/
-            
-        - name: Zip binaries
-          run: |
-            cd artifacts
-            for d in ScreenRecorderLib.*; do
-              zip -j "${d}.zip" "$d"/*
-            done
-        - name: Display structure of downloaded files
-          run: ls -R
-        - uses: marvinpinto/action-automatic-releases@latest
-          with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            prerelease: false
-            files: artifacts/*.zip
