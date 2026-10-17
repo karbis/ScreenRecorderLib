@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-2022
     strategy:
       matrix:
-        platform: [x64, x86, ARM64]
+        platform: [x64]
 
     steps:
     - uses: actions/checkout@v4
