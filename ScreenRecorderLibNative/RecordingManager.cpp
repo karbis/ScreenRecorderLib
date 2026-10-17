@@ -588,7 +588,6 @@ REC_RESULT RecordingManager::StartRecorderLoop(_In_ const std::vector<RECORDING_
 				continue;
 			}
 		}
-		bool isFrameTimeout = false;
 		CAPTURED_FRAME capturedFrame{};
 		if (!m_IsPaused || IsAnySourcePreviewsActive()) {
 			// Get new frame
@@ -602,8 +601,7 @@ REC_RESULT RecordingManager::StartRecorderLoop(_In_ const std::vector<RECORDING_
 					//On stale frames, periodically flush sink writer to avoid encoder hoarding memory.
 					if (m_TimelineManager->GetRenderedVideoFrameCount() % 100 == 0) {
 						LOG_TRACE("Flushed ID3D11DeviceContext");
-						isFrameTimeout = true;
-						m_OutputManager->FlushSinkWriter();
+						m_DxResources.Context->Flush();
 					}
 				}
 				if (capturedFrame.PtrInfo) {

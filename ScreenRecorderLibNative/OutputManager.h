@@ -52,11 +52,6 @@ public:
 	HRESULT WriteFrameToImage(_In_ ID3D11Texture2D *pAcquiredDesktopImage, _In_ std::wstring filePath);
 	HRESULT WriteFrameToImage(_In_ ID3D11Texture2D *pAcquiredDesktopImage, _In_ IStream *pStream);
 	inline nlohmann::fifo_map<std::wstring, int> GetFrameDelays() { return m_FrameDelays; }
-	inline void FlushSinkWriter() {
-		if (m_SinkWriter) {
-			m_SinkWriter->Flush(m_VideoStreamIndex);
-		}
-	}
 private:
 	ID3D11DeviceContext *m_DeviceContext = nullptr;
 	ID3D11Device *m_Device = nullptr;
